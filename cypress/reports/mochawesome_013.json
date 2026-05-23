@@ -1,0 +1,109 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-05-23T17:15:19.023Z",
+    "end": "2026-05-23T17:15:40.362Z",
+    "duration": 21339,
+    "testsRegistered": 1,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "dd6a88a5-1933-43df-91bb-247e3b8f3bab",
+      "title": "",
+      "fullFile": "cypress\\e2e\\homework.cy.js",
+      "file": "cypress\\e2e\\homework.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "82b30ad9-60d1-42c8-a85c-135399fd3de0",
+          "title": "Homework",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Registration + Login flow",
+              "fullTitle": "Homework Registration + Login flow",
+              "timedOut": null,
+              "duration": 21302,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const email = `test${Date.now()}@mail.com`;\nconst password = 'Password1';\n// Слідкуємо за ключовими запитами бекенду\ncy.intercept('POST', '/api/cars').as('createCar');\ncy.intercept('POST', '/api/auth/signin').as('loginUser');\ncy.visit('/');\ncy.contains('Sign up').click();\n_RegistrationPage.default.typeName('John');\n_RegistrationPage.default.typeLastName('Doe');\n_RegistrationPage.default.typeEmail(email);\n_RegistrationPage.default.typePassword(password);\n_RegistrationPage.default.typeRepeatPassword(password);\n_RegistrationPage.default.clickRegister();\ncy.contains('Garage', {\n  timeout: 15000\n});\n// Створюємо машину одразу після реєстрації\n_GaragePage.default.addCar('BMW', 'X5', '10000');\n// Чекаємо, поки бекенд реально створить авто в базі даних\ncy.wait('@createCar', {\n  timeout: 15000\n});\ncy.get('.car-item', {\n  timeout: 10000\n}).should('be.visible');\n// Робимо Logout\ncy.get('.user-nav_toggle').click({\n  force: true\n});\ncy.contains('Logout').click({\n  force: true\n});\n// Логінимося назад\ncy.contains('Sign In').click({\n  force: true\n});\ncy.get('#signinEmail').type(email, {\n  force: true\n});\ncy.get('#signinPassword').type(password, {\n  sensitive: true,\n  force: true\n});\ncy.contains('Login').click({\n  force: true\n});\n// Чекаємо на успішну авторизацію бекендом\ncy.wait('@loginUser', {\n  timeout: 15000\n});\ncy.contains('Garage', {\n  timeout: 15000\n});\ncy.get('.car-item', {\n  timeout: 10000\n}).should('be.visible');\n// Переходимо до витрат\ncy.get('a[href=\"/panel/expenses\"]').click({\n  force: true\n});\n_ExpensesPage.default.addExpense('10500', '50', '2500');\ncy.get('.table', {\n  timeout: 10000\n}).should('contain', '10500');",
+              "err": {
+                "message": "CypressError: Timed out retrying after 15000ms: `cy.wait()` timed out waiting `15000ms` for the 1st request to the route: `createCar`. No request ever occurred.\n\nhttps://on.cypress.io/wait",
+                "estack": "CypressError: Timed out retrying after 15000ms: `cy.wait()` timed out waiting `15000ms` for the 1st request to the route: `createCar`. No request ever occurred.\n\nhttps://on.cypress.io/wait\n    at cypressErr (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:78521:18)\n    at Object.errByPath (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:78579:10)\n    at checkForXhr (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:139085:84)\n    at <unknown> (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:139110:28)\n    at tryCatcher (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:4285:29)\n    at whenStable (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:152237:70)\n    at <unknown> (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:152152:14)\n    at tryCatcher (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:1671:18)\n    at Promise._fulfill (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:1615:18)\n    at <unknown> (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:5420:46)\nFrom Your Spec Code:\n    at Object.proxyGetter [as get] (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:81302:22)\n    at exists (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:151366:26)\n    at elExists (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:151381:10)\n    at ensureExistence (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:151562:22)\n    at onFailFn (https://guest:welcome2qauto@qauto.forstudy.space/__cypress/runner/cypress_runner.js:151591:53)",
+                "diff": null
+              },
+              "uuid": "56ad45a3-900c-4f04-a23f-9f832bc0abc0",
+              "parentUUID": "82b30ad9-60d1-42c8-a85c-135399fd3de0",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "56ad45a3-900c-4f04-a23f-9f832bc0abc0"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 21302,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

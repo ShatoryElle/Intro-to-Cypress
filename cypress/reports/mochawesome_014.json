@@ -1,0 +1,109 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-05-23T17:16:54.122Z",
+    "end": "2026-05-23T17:17:12.549Z",
+    "duration": 18427,
+    "testsRegistered": 1,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "2345b683-1e54-4fed-a156-1dc06991c547",
+      "title": "",
+      "fullFile": "cypress\\e2e\\homework.cy.js",
+      "file": "cypress\\e2e\\homework.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "d35de6b5-9a50-483a-a17b-7b79a30c620c",
+          "title": "Homework",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Registration + Login flow",
+              "fullTitle": "Homework Registration + Login flow",
+              "timedOut": null,
+              "duration": 18365,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const email = `test${Date.now()}@mail.com`;\nconst password = 'Password1';\ncy.visit('/');\n// 1. Реєстрація\ncy.contains('Sign up').click();\n_RegistrationPage.default.typeName('John');\n_RegistrationPage.default.typeLastName('Doe');\n_RegistrationPage.default.typeEmail(email);\n_RegistrationPage.default.typePassword(password);\n_RegistrationPage.default.typeRepeatPassword(password);\n_RegistrationPage.default.clickRegister();\ncy.contains('Garage', {\n  timeout: 10000\n});\n// 2. Логаут (виходимо відразу, ігноруючи автоматичні вікна)\ncy.get('.user-nav_toggle').click({\n  force: true\n});\ncy.contains('Logout').click({\n  force: true\n});\n// 3. Чистий перезахід на головну для скидання стану UI\ncy.visit('/');\ncy.contains('Sign In').click({\n  force: true\n});\n// 4. Логін\ncy.get('#signinEmail').type(email, {\n  force: true\n});\ncy.get('#signinPassword').type(password, {\n  sensitive: true,\n  force: true\n});\ncy.contains('Login').click({\n  force: true\n});\ncy.contains('Garage', {\n  timeout: 10000\n});\n// 5. Додавання машини\n_GaragePage.default.addCar('BMW', 'X5', '10000');\ncy.get('.car-item', {\n  timeout: 10000\n}).should('be.visible');\n// 6. Додавання витрат\ncy.get('a[href=\"/panel/expenses\"]').click({\n  force: true\n});\n_ExpensesPage.default.addExpense('10500', '50', '2500');\ncy.get('.table', {\n  timeout: 10000\n}).should('contain', '10500');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `.car-item`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `.car-item`, but never found it.\n    at Context.eval (webpack://intro-to-cypress/./cypress/e2e/homework.cy.js:41:44)",
+                "diff": null
+              },
+              "uuid": "423183d9-edd4-4d03-8112-9090b6499d67",
+              "parentUUID": "d35de6b5-9a50-483a-a17b-7b79a30c620c",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "423183d9-edd4-4d03-8112-9090b6499d67"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 18365,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

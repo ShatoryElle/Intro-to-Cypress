@@ -1,0 +1,109 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-05-23T17:03:35.923Z",
+    "end": "2026-05-23T17:03:48.091Z",
+    "duration": 12168,
+    "testsRegistered": 1,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "6e6bb536-9b22-4825-8596-2063e4649b7a",
+      "title": "",
+      "fullFile": "cypress\\e2e\\homework.cy.js",
+      "file": "cypress\\e2e\\homework.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "8c90fc2f-d60f-42d2-af15-a5503073a0e1",
+          "title": "Homework",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Registration + Login flow",
+              "fullTitle": "Homework Registration + Login flow",
+              "timedOut": null,
+              "duration": 12116,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const email = `test${Date.now()}@mail.com`;\nconst password = 'Password1';\ncy.visit('/');\ncy.contains('Sign up').click();\n_RegistrationPage.default.typeName('John');\n_RegistrationPage.default.typeLastName('Doe');\n_RegistrationPage.default.typeEmail(email);\n_RegistrationPage.default.typePassword(password);\n_RegistrationPage.default.typeRepeatPassword(password);\n_RegistrationPage.default.clickRegister();\ncy.contains('Garage');\ncy.get('.user-nav_toggle').click();\ncy.contains('Logout').should('be.visible').click();\ncy.contains('Sign In').click();\ncy.get('#signinEmail').type(email);\ncy.get('#signinPassword').type(password, {\n  sensitive: true\n});\ncy.contains('Login').click();\ncy.contains('Garage');\n_GaragePage.default.addCar('BMW', 'X5', '10000');\ncy.get('.car-item').should('be.visible');\ncy.get('a[href=\"/panel/expenses\"]').click();\n_ExpensesPage.default.addExpense('10500', '50', '2500');\ncy.get('.table').should('contain', '10500');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#addCarBrand`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 4000ms: Expected to find element: `#addCarBrand`, but never found it.\n    at get carBrandSelect (webpack://intro-to-cypress/./cypress/helpers/Page Objects/GaragePage.js:2:35)\n    at GaragePage.addCar (webpack://intro-to-cypress/./cypress/helpers/Page Objects/GaragePage.js:8:9)\n    at Context.eval (webpack://intro-to-cypress/./cypress/e2e/homework.cy.js:36:15)",
+                "diff": null
+              },
+              "uuid": "a389cb85-b09d-46a2-8270-3466fcd328ba",
+              "parentUUID": "8c90fc2f-d60f-42d2-af15-a5503073a0e1",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "a389cb85-b09d-46a2-8270-3466fcd328ba"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 12116,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}
