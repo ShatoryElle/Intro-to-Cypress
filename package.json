@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:qauto": "cypress run --config-file cypress.prod.config.js",
+    "test:qauto2": "cypress run --config-file cypress.buggy.config.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,9 @@
   },
   "homepage": "https://github.com/ShatoryElle/Intro-to-Cypress#readme",
   "devDependencies": {
-    "cypress": "^15.14.2"
+    "cypress": "^15.14.2",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^4.2.0",
+    "mochawesome-report-generator": "^6.2.0"
   }
 }

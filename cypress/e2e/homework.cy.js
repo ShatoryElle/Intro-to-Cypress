@@ -1,36 +1,29 @@
-import RegistrationPage from '../helpers/Page Objects/RegistrationPage';
+import GaragePage from '../helpers/Page Objects/GaragePage';
+import ExpensesPage from '../helpers/Page Objects/ExpensesPage';
 
 describe('Homework', () => {
 
-  it('Registration + Login flow', () => {
+  it('Login + Garage + Expenses flow', () => {
+    const email = Cypress.env("userEmail");
+    const password = Cypress.env("password");
 
-    const email = `test${Date.now()}@mail.com`;
-    const password = 'Password1';
+    cy.visit('/', {
+      auth: {
+        username: 'guest',
+        password: 'welcome2qauto'
+      }
+    });
 
-    cy.visit('/');
-
-    cy.contains('Sign up').click();
-
-    RegistrationPage.typeName('John');
-    RegistrationPage.typeLastName('Doe');
-    RegistrationPage.typeEmail(email);
-    RegistrationPage.typePassword(password);
-    RegistrationPage.typeRepeatPassword(password);
-
-    RegistrationPage.clickRegister();
-
-    cy.contains('Garage');
-
-cy.get('.user-nav_toggle').click();
-cy.contains('Logout').should('be.visible').click();
-
-    cy.contains('Sign In').click();
-
+    cy.contains('button', 'Sign In').click();
     cy.get('#signinEmail').type(email);
     cy.get('#signinPassword').type(password, { sensitive: true });
-    cy.contains('Login').click();
-
-    cy.contains('Garage');
+    cy.contains('button', 'Login').click();
+    cy.contains('Garage', { timeout: 10000 });
+    GaragePage.addCar('BMW', 'X5', '10000');
+    cy.get('.car-item').should('be.visible');
+    cy.contains('a', 'Fuel expenses').click();
+    ExpensesPage.addExpense('10500', '50', '2500');
+    cy.get('.table').should('contain', '10500');
   });
 
 });
