@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-05-23T18:04:38.204Z",
+    "end": "2026-05-23T18:04:43.751Z",
+    "duration": 5547,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "0e47e4bc-e0c7-463d-805e-de1021cd276c",
+      "title": "",
+      "fullFile": "cypress\\e2e\\homework.cy.js",
+      "file": "cypress\\e2e\\homework.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "0bfe7d13-98b9-4437-a0ec-fa1287f337f6",
+          "title": "Homework API + UI",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Login + Garage + API + Expenses flow",
+              "fullTitle": "Homework API + UI Login + Garage + API + Expenses flow",
+              "timedOut": null,
+              "duration": 5481,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const email = Cypress.env(\"userEmail\");\nconst password = Cypress.env(\"password\");\ncy.visit('/', {\n  auth: {\n    username: 'guest',\n    password: 'welcome2qauto'\n  }\n});\ncy.contains('button', 'Sign In').click();\ncy.get('#signinEmail').type(email);\ncy.get('#signinPassword').type(password, {\n  sensitive: true\n});\ncy.contains('button', 'Login').click();\ncy.contains('Garage', {\n  timeout: 10000\n});\n// intercept створення авто\ncy.intercept('POST', '/api/cars').as('createCar');\n// додаємо авто\n_GaragePage.default.addCar('BMW', 'X5', '10000');\n// отримуємо carId\ncy.wait('@createCar').then(interception => {\n  expect(interception.response.statusCode).to.eq(201);\n  const carId = interception.response.body.data.id;\n  cy.wrap(carId).as('carId');\n});\ncy.get('.car-item').should('be.visible');\n// перевірка API\ncy.get('@carId').then(carId => {\n  cy.request('/api/cars').then(response => {\n    expect(response.status).to.eq(200);\n    const ids = response.body.data.map(car => car.id);\n    expect(ids).to.include(carId);\n  });\n});\n// створення expense через API\ncy.get('@carId').then(carId => {\n  cy.request({\n    method: 'POST',\n    url: '/api/expenses',\n    body: {\n      carId: carId,\n      mileage: 11000,\n      liters: 20,\n      totalCost: 1000,\n      reportedAt: new Date().toISOString()\n    }\n  }).then(response => {\n    expect([200, 201]).to.include(response.status);\n  });\n});\n// перевірка UI\ncy.contains('a', 'Fuel expenses').click();\ncy.contains('11000').should('exist');\ncy.contains('1000').should('exist');",
+              "err": {},
+              "uuid": "1051d5ea-bbd7-490f-8446-7411ea12e6b8",
+              "parentUUID": "0bfe7d13-98b9-4437-a0ec-fa1287f337f6",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "1051d5ea-bbd7-490f-8446-7411ea12e6b8"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5481,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}
